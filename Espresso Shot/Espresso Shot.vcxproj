@@ -74,6 +74,11 @@
     <LibraryPath>./libs;$(LibraryPath)</LibraryPath>
     <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>./include;$(IncludePath)</IncludePath>
+    <LibraryPath>./libs;$(LibraryPath)</LibraryPath>
+    <SourcePath>./src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -83,7 +88,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,6 +100,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,6 +135,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Espresso\Camera.cpp" />
+    <ClCompile Include="src\Espresso\Mesh.cpp" />
+    <ClCompile Include="src\Espresso\ShaderProgram.cpp" />
+    <ClCompile Include="src\Espresso\Texture.cpp" />
+    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\stb_image_implimentation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Espresso\Camera.h" />
+    <ClInclude Include="include\Espresso\IO.h" />
+    <ClInclude Include="include\Espresso\Mesh.h" />
+    <ClInclude Include="include\Espresso\ShaderProgram.h" />
+    <ClInclude Include="include\Espresso\stb_image.h" />
+    <ClInclude Include="include\Espresso\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

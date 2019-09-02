@@ -1,8 +1,8 @@
-#include "Texture.h"
+#include "Espresso/Texture.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-namespace Pm {
+namespace Espresso {
 
 	Texture::Texture(std::string PATH)
 	{

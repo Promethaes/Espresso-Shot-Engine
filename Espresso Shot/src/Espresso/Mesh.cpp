@@ -1,10 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <glad/glad.h>
-#include "Mesh.h"
+#include "Espresso/Mesh.h"
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace Pm {
+namespace Espresso {
 
 	struct FaceData {
 
@@ -13,7 +13,7 @@ namespace Pm {
 		unsigned normalData[3];
 	};
 
-	bool Pm::Mesh::loadMesh(const std::string& path)
+	bool Espresso::Mesh::loadMesh(const std::string& path)
 	{
 		//	std::string inputString;
 		char inputString[128];

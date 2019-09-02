@@ -4,10 +4,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-namespace Pm {
+namespace Espresso {
 	class Camera {
 	public:
-		Camera();
+		Camera() = default;
 		glm::mat4 whereAreWeLooking() const;
 		
 		void doMouseMovement(float xoffset,float yoffset);

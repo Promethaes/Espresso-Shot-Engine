@@ -1,9 +1,6 @@
-#include "Camera.h"
-namespace Pm {
+#include "Espresso/Camera.h"
+namespace Espresso {
 
-	Pm::Camera::Camera()
-	{
-	}
 
 	glm::mat4 Camera::whereAreWeLooking() const
 	{
@@ -27,13 +24,13 @@ namespace Pm {
 
 	void Camera::move(GLFWwindow* window,float movementSpeed)
 	{
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 			cameraPos += movementSpeed * cameraFront;
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 			cameraPos -= movementSpeed * cameraFront;
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * movementSpeed;
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * movementSpeed;
 	}
 

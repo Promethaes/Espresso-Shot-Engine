@@ -1,11 +1,11 @@
-#include "ShaderProgram.h"
-#include "IO.h"
+#include "Espresso/ShaderProgram.h"
+#include "Espresso/IO.h"
 #include <stdio.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Camera.h"
-namespace Pm {
+#include "Espresso/Camera.h"
+namespace Espresso {
 
 
 

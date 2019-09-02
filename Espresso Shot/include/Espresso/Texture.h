@@ -1,7 +1,7 @@
 #pragma once
 #include "stb_image.h"
 #include <string>
-namespace Pm {
+namespace Espresso {
 	class Texture {
 	public:
 		Texture(std::string PATH);

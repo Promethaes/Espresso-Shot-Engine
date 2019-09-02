@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
 #include <string>
-namespace Pm {
+namespace Espresso {
 
 	class Camera;
 

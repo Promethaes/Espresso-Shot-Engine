@@ -1,6 +1,6 @@
 #pragma once
 #include "IO.h"
-namespace Pm {
+namespace Espresso {
 	class Mesh {
 	public:
 		Mesh() = default;
