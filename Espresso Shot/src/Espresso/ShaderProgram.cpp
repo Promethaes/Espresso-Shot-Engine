@@ -7,8 +7,6 @@
 #include "Espresso/Camera.h"
 namespace Espresso {
 
-
-
 	Shader::Shader(std::string VERTSHADERSOURCE, std::string FRAGSHADERSOURCE)
 	{
 		vertexShader = glCreateShader(GL_VERTEX_SHADER);

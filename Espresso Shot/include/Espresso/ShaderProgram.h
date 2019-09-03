@@ -9,8 +9,8 @@ namespace Espresso {
 
 	class Shader {
 	public:
-		//default constructor is all that you need to call
 
+		Shader() = default;
 		Shader(std::string VERTSHADERSOURCE, std::string FRAGSHADERSOURCE);
 
 		//get the program 
@@ -21,6 +21,7 @@ namespace Espresso {
 		void setFloat(const std::string &name, const float& value) const;
 		void setInt(const std::string& name, const int& value)const;
 
+		void createProgram();
 		//not sure if i should be making these functions but we're gonna try it anyways
 
 		glm::mat4 loadModel(bool transform = false,bool scale = false, bool rotate = false,const glm::vec3& translatiom = glm::vec3(0, 0, 0),float scaleBy = 0.0f,const glm::vec3& rotateBy = glm::vec3(0,0,0),float rotationAngle = 0.0f);
@@ -30,7 +31,6 @@ namespace Espresso {
 	private:
 		//compiles the shader that you pass in
 		void compileShader(unsigned shader, const char* tempString);
-		void createProgram();
 
 
 		unsigned shaderProgram;

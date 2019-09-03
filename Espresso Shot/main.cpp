@@ -9,6 +9,8 @@
 #include <time.h>
 
 #include "Espresso/Camera.h"
+#include "Espresso/ShaderProgram.h"
+#include "f16.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -27,6 +29,7 @@ float dt = 0.0f;	// Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 int main() {
 	srand(time(0));
+
 	//initialize glfw
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -34,7 +37,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-	GLFWwindow* window = glfwCreateWindow(800 * 2, 600 * 2, "Optics simulation", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800 * 2, 600 * 2, "Espresso Test", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << "\n";
@@ -52,8 +55,25 @@ int main() {
 		std::cout << "Failed to initialize GLAD" << "\n";
 		return -1;
 	}
+	//end initialization
+	Espresso::Shader lightingShader("Assets/Shaders/lightingShader.vert", "Assets/Shaders/lightingShader.frag");
+
+	std::vector<Espresso::GameObject*> gameObjects;
+	gameObjects.push_back(new Espresso::F16(Espresso::Mesh("Assets/Mesh/f16.obj"), lightingShader));
+
+	glm::vec3 pointLightPositions[] = {
+	glm::vec3(0.7f,  0.2f,  2.0f),
+	glm::vec3(2.3f, -3.3f, -4.0f),
+	glm::vec3(-4.0f,  2.0f, -12.0f),
+	glm::vec3(0.0f,  0.0f, -3.0f)
+	};
 
 
+
+	glEnable(GL_DEPTH_TEST);
+
+
+	//render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		float currentFrame = glfwGetTime();
@@ -63,9 +83,49 @@ int main() {
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		for (auto x : gameObjects)
+			x->update(dt);
+
+		lightingShader.loadViewMatrix(defaultCamera);
+		lightingShader.loadProjectionMatrix(800.0f * 2, 600.0f * 2);
+		lightingShader.setInt("material.specular", 1);
+		lightingShader.setFloat("material.shininess", 32.0f);
+
+		// directional light
+		lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
+		lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+		lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+		lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+
+		for (unsigned i = 0; i < 4; i++) {
+
+			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].position", pointLightPositions[i]);
+			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].ambient", 0.05f, 0.05f, 0.05f);
+			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].diffuse", 0.8f, 0.8f, 0.8f);
+			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].specular", 1.0f, 1.0f, 1.0f);
+			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].constant", 1.0f);
+			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].linear", 0.09);
+			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].quadratic", 0.032);
+		}
+
+		glm::vec3 lightColor = glm::vec4(2.0f, 2.0f, 2.0f, 1);
+		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
+		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
+
+		lightingShader.setVec3("light.ambient", ambientColor);
+		lightingShader.setVec3("light.diffuse", diffuseColor);
+		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
+
+		lightingShader.setVec3("viewPos", defaultCamera.getPosition());
+
+
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	//end of program
 	glfwTerminate();
 
 	return 0;

@@ -1,13 +1,12 @@
 #include "Espresso/Texture.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
 #include <iostream>
 namespace Espresso {
 
-	Texture::Texture(std::string PATH)
+	Texture::Texture(std::string PATH, const TextureType& ID)
 	{
 		path = PATH;
-
+		type = ID;
 		load();
 		/////<if it wasn't obvious, a lot of this code isn't mine, but this entire section is ACTUALLY copy and pasted to shit so...not like other sections aren't but yeah>
 		//glGenTextures(1, &texture);
@@ -69,6 +68,6 @@ namespace Espresso {
 			stbi_image_free(data);
 		}
 
-		return textureID;
+		return texture = textureID;
 	}
 }

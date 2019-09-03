@@ -3,10 +3,10 @@
 namespace Espresso {
 	class Mesh {
 	public:
-		Mesh() = default;
-		~Mesh();
+		Mesh(const std::string& path) { this->path = path; }
 
 		bool loadMesh(const std::string& path);
+		bool loadMesh();
 
 		void unload();
 		void draw();
@@ -20,6 +20,6 @@ namespace Espresso {
 	private:
 		unsigned numFaces = 0;
 		unsigned numVerts = 0;
-
+		std::string path;
 	};
 }

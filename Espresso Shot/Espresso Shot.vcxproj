@@ -134,6 +134,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="f16.cpp" />
+    <ClCompile Include="Game Object.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Espresso\Camera.cpp" />
     <ClCompile Include="src\Espresso\Mesh.cpp" />
@@ -143,12 +146,16 @@
     <ClCompile Include="src\stb_image_implimentation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Events.h" />
+    <ClInclude Include="f16.h" />
+    <ClInclude Include="Game Object.h" />
     <ClInclude Include="include\Espresso\Camera.h" />
     <ClInclude Include="include\Espresso\IO.h" />
     <ClInclude Include="include\Espresso\Mesh.h" />
     <ClInclude Include="include\Espresso\ShaderProgram.h" />
     <ClInclude Include="include\Espresso\stb_image.h" />
     <ClInclude Include="include\Espresso\Texture.h" />
+    <ClInclude Include="Input.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
