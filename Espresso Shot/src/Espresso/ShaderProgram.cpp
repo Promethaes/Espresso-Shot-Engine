@@ -70,7 +70,7 @@ namespace Espresso {
 
 	}
 
-	glm::mat4 Shader::loadModel(bool transform, bool scale, bool rotate, const glm::vec3& translation, float scaleBy, const glm::vec3& rotateBy, float rotationAngle)
+	glm::mat4 Shader::loadModelMatrix(bool transform, bool scale, bool rotate, const glm::vec3& translation, float scaleBy, const glm::vec3& rotateBy, float rotationAngle)
 	{
 		glm::mat4 model = glm::mat4(1.0f);
 
@@ -86,7 +86,7 @@ namespace Espresso {
 		return model;
 	}
 
-	void Shader::loadModel(const glm::mat4& model)
+	void Shader::loadModelMatrix(const glm::mat4& model)
 	{
 		unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

@@ -10,24 +10,30 @@
 namespace Espresso {
 	class GameObject {
 	public:
-		GameObject(const Mesh& MESH, const Shader& SHADER, unsigned numTextures,...);
+		GameObject(const Mesh& MESH, const Shader& SHADER, unsigned numTextures, ...);
 
-		virtual void update(float dt);
-		void updateGO();
-		virtual void draw() = 0;
+		void baseUpdate(float dt);
 		void setShader(const Shader& SHADER) {
 			shader = SHADER;
 			shader.createProgram();
 		}
 
+		static std::vector<GameObject*> gameObjects;
+
 		std::string id;
 		void loadTextures();
 		void loadMesh();
 	protected:
+		virtual void draw();
+		bool loadedTextures = false;
+		bool loadedMesh = false;
+
 		std::vector<Texture*> textures;
 		Mesh* mesh = nullptr;
 		Shader shader;
 		glm::mat4 model = glm::mat4(1.0);
+	private:
+		virtual void childUpdate(float dt) = 0;
 
 	};
 }

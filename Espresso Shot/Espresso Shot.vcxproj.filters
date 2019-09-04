@@ -36,13 +36,19 @@
     <ClCompile Include="src\Espresso\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="f16.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
+    <ClCompile Include="src\Espresso\Scene Manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Espresso\XinputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Espresso\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Espresso\Game Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,16 +71,22 @@
     <ClInclude Include="include\Espresso\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="f16.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Events.h">
+    <ClInclude Include="include\Espresso\Scene Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
+    <ClInclude Include="include\Espresso\XinputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Espresso\Events.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Espresso\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Espresso\Game Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

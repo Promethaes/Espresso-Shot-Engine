@@ -1,15 +1,16 @@
 #include "f16.h"
-#include "Events.h"
-#include "Input.h"
+#include "Espresso/Events.h"
+#include "Espresso/Input.h"
 namespace Espresso {
-	F16::F16(const Mesh& MESH, const Shader& SHADER)
-		:GameObject(MESH, SHADER, 1, new Texture("Assets/Textures/Metal_specmap.png", TextureType::SpecularMap))
+	F16::F16(const Mesh& MESH, const Shader& SHADER, const Sedna::XinputManager* manager,unsigned controllerIndex)
+		:GameObject(MESH, SHADER, 1, new Texture("Assets/Textures/Metal_specmap.png", TextureType::SpecularMap),new Texture("Assets/Textures/container2.png",TextureType::DiffuseMap))
 	{
 		id = "F16";
+		controller = manager->getController(controllerIndex);
 	}
-
-	void F16::update(float dt)
+	void F16::childUpdate(float dt)
 	{
+
 		if (isEvent(Events::W))
 			f16Pos += model[0] * 2.5f * dt;
 		if (isEvent(Events::A)) {
@@ -50,7 +51,7 @@ namespace Espresso {
 				textures[i]->bind(1);
 		}
 
-		model = shader.loadModel(true, false, true, f16Pos, 0, f16RotationV, f16Rotationfloat);
+		model = shader.loadModelMatrix(true, false, true, f16Pos, 0, f16RotationV, f16Rotationfloat);
 		mesh->draw();
 
 		for (unsigned i = 0; i < textures.size(); i++) {

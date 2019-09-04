@@ -10,6 +10,7 @@
 
 #include "Espresso/Camera.h"
 #include "Espresso/ShaderProgram.h"
+#include "Espresso/XinputManager.h"
 #include "f16.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -58,8 +59,9 @@ int main() {
 	//end initialization
 	Espresso::Shader lightingShader("Assets/Shaders/lightingShader.vert", "Assets/Shaders/lightingShader.frag");
 
-	std::vector<Espresso::GameObject*> gameObjects;
-	gameObjects.push_back(new Espresso::F16(Espresso::Mesh("Assets/Mesh/f16.obj"), lightingShader));
+	Sedna::XinputManager* manager = new Sedna::XinputManager();
+	Sedna::XinputController* controller = manager->getController(0);
+	Espresso::F16 f16(Espresso::Mesh("Assets/Mesh/missPiggy2.obj"), lightingShader,manager,0);
 
 	glm::vec3 pointLightPositions[] = {
 	glm::vec3(0.7f,  0.2f,  2.0f),
@@ -69,13 +71,13 @@ int main() {
 	};
 
 
-
 	glEnable(GL_DEPTH_TEST);
 
 
 	//render loop
 	while (!glfwWindowShouldClose(window))
 	{
+
 		float currentFrame = glfwGetTime();
 		dt = currentFrame - lastFrame;
 		lastFrame = currentFrame;
@@ -83,11 +85,15 @@ int main() {
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		for (auto x : gameObjects)
-			x->update(dt);
+
+		manager->update();
+
+		for (auto x : Espresso::GameObject::gameObjects)
+			x->baseUpdate(dt);
 
 		lightingShader.loadViewMatrix(defaultCamera);
 		lightingShader.loadProjectionMatrix(800.0f * 2, 600.0f * 2);
+		lightingShader.setInt("material.diffuse", 0);
 		lightingShader.setInt("material.specular", 1);
 		lightingShader.setFloat("material.shininess", 32.0f);
 
@@ -99,10 +105,10 @@ int main() {
 
 		for (unsigned i = 0; i < 4; i++) {
 
-			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].position", pointLightPositions[i]);
-			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].ambient", 0.05f, 0.05f, 0.05f);
-			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].diffuse", 0.8f, 0.8f, 0.8f);
-			lightingShader.setVec3("pointLights[" + std::to_string(i) + "].specular", 1.0f, 1.0f, 1.0f);
+			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].position", pointLightPositions[i]);
+			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].ambient", 0.05f, 0.05f, 0.05f);
+			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].diffuse", 0.8f, 0.8f, 0.8f);
+			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].specular", 1.0f, 1.0f, 1.0f);
 			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].constant", 1.0f);
 			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].linear", 0.09);
 			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].quadratic", 0.032);

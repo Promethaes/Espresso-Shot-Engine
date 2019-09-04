@@ -34,7 +34,7 @@ namespace Espresso {
 		//stbi_image_free(data);
 
 	}
-	unsigned Texture::load() {
+	bool Texture::load() {
 		//again, one hundred million % not mine
 		unsigned int textureID;
 		glGenTextures(1, &textureID);
@@ -66,8 +66,10 @@ namespace Espresso {
 		{
 			std::cout << "Texture failed to load at path: " << path << std::endl;
 			stbi_image_free(data);
+			return false;
 		}
 
-		return texture = textureID;
+		texture = textureID;
+		return true;
 	}
 }
