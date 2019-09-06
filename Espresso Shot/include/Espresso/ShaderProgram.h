@@ -2,11 +2,10 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
+#include <optional>
 #include <string>
 namespace Espresso {
-
 	class Camera;
-
 	class Shader {
 	public:
 
@@ -26,8 +25,7 @@ namespace Espresso {
 		void createProgram();
 		//not sure if i should be making these functions but we're gonna try it anyways
 
-		glm::mat4 loadModelMatrix(bool transform = false,bool scale = false, bool rotate = false,const glm::vec3& translatiom = glm::vec3(0, 0, 0),float scaleBy = 0.0f,const glm::vec3& rotateBy = glm::vec3(0,0,0),float rotationAngle = 0.0f);
-		void loadModelMatrix(const glm::mat4& model);
+		glm::mat4 loadModelMatrix(const std::optional<glm::vec3>& translation, const std::optional<float>& scaleBy, const std::optional<glm::vec3>& rotateBy, const std::optional<float>& rotateAngle);
 		void loadViewMatrix(Camera& defaultCamera);
 		void loadProjectionMatrix(float width, float height);
 	private:

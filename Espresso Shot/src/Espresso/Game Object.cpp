@@ -35,7 +35,7 @@ namespace Espresso {
 				textures[i]->bind(1);
 		}
 
-		model = shader.loadModelMatrix(false, false, false, glm::vec3(0, 0, 0), 0, glm::vec3(0, 0, 0), 0);
+		model = shader.loadModelMatrix(std::nullopt,std::nullopt,std::nullopt,std::nullopt);
 		mesh->draw();
 
 		for (unsigned i = 0; i < textures.size(); i++) {

@@ -82,26 +82,20 @@ namespace Espresso {
 
 	}
 
-	glm::mat4 Shader::loadModelMatrix(bool transform, bool scale, bool rotate, const glm::vec3& translation, float scaleBy, const glm::vec3& rotateBy, float rotationAngle)
+	glm::mat4 Shader::loadModelMatrix(const std::optional<glm::vec3>& translation, const std::optional<float>& scaleBy, const std::optional<glm::vec3>& rotateBy, const std::optional<float>& rotateAngle)
 	{
 		glm::mat4 model = glm::mat4(1.0f);
 
-		if (transform)
-			model = glm::translate(model, translation);
-		if (scale)
-			model = glm::scale(model, glm::vec3(scaleBy));
-		if (rotate)
-			model = glm::rotate(model, rotationAngle, rotateBy);
+		if (translation.has_value())
+			model = glm::translate(model, translation.value());
+		if (scaleBy.has_value())
+			model = glm::scale(model, glm::vec3(scaleBy.value()));
+		if (rotateBy.has_value())
+			model = glm::rotate(model, rotateAngle.value(), rotateBy.value());
 
 		unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		return model;
-	}
-
-	void Shader::loadModelMatrix(const glm::mat4& model)
-	{
-		unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	}
 
 	void Shader::loadViewMatrix(Camera& defaultCamera)

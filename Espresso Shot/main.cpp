@@ -38,6 +38,7 @@ int main() {
 	srand(time(0));
 
 	//initialize glfw
+#pragma region InitialzeGLFW
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -63,16 +64,20 @@ int main() {
 		return -1;
 	}
 	//end initialization
+#pragma endregion
+
+
+
 	Espresso::Shader lightingShader("Assets/Shaders/lightingShader.vert", "Assets/Shaders/lightingShader.frag");
 
 	Sedna::XinputManager* manager = new Sedna::XinputManager();
 	Sedna::XinputController* controller = manager->getController(0);
-	Espresso::F16 f16(Espresso::Mesh("Assets/Mesh/f16.obj"), lightingShader,manager,0);
+	Espresso::F16 f16(Espresso::Mesh("Assets/Mesh/f16.obj"), lightingShader, manager, 0);
 
-	
+
 	//run this scene
 	Espresso::TestScene* s = new Espresso::TestScene(true);
-	
+
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -85,17 +90,17 @@ int main() {
 		float currentFrame = glfwGetTime();
 		dt = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-		processInput(*defaultCamera,dt,window);
+		processInput(*defaultCamera, dt, window);
 		glClearColor(0.33f, 0.33f, 0.33f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-		manager->update();
+		//manager->update();
 
 		for (unsigned i = 0; i < Scenes.size(); i++) {
 			if (!Scenes[i]->isInit())
 				Scenes[i]->init();
-			else 
+			if (Scenes[i]->isInit())
 				Scenes[i]->baseUpdate(dt, *defaultCamera);
 		}
 		for (auto x : GameObjects)
