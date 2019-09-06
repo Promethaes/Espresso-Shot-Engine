@@ -5,9 +5,21 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Espresso/Camera.h"
+#include "..\..\include\Espresso\ShaderProgram.h"
 namespace Espresso {
 
 	Shader::Shader(std::string VERTSHADERSOURCE, std::string FRAGSHADERSOURCE)
+	{
+		vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		vertexShaderSource = VERTSHADERSOURCE;
+		fragmentShaderSource = FRAGSHADERSOURCE;
+
+
+		createProgram();
+	}
+
+	void Shader::createShader(const std::string& VERTSHADERSOURCE, std::string FRAGSHADERSOURCE)
 	{
 		vertexShader = glCreateShader(GL_VERTEX_SHADER);
 		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);

@@ -13,6 +13,8 @@ namespace Espresso {
 		Shader() = default;
 		Shader(std::string VERTSHADERSOURCE, std::string FRAGSHADERSOURCE);
 
+		//only call this function if you can't call the constructor for some reason
+		void createShader(const std::string& VERTSHADERSOURCE, std::string FRAGSHADERSOURCE);
 		//get the program 
 		unsigned getId() const { return shaderProgram; }
 		void setVec3(const std::string&name, const float x, const float y, const float z) const;

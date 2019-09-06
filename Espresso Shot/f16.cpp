@@ -2,11 +2,12 @@
 #include "Espresso/Events.h"
 #include "Espresso/Input.h"
 namespace Espresso {
-	F16::F16(const Mesh& MESH, const Shader& SHADER, const Sedna::XinputManager* manager,unsigned controllerIndex)
-		:GameObject(MESH, SHADER, 1, new Texture("Assets/Textures/Metal_specmap.png", TextureType::SpecularMap),new Texture("Assets/Textures/container2.png",TextureType::DiffuseMap))
+	F16::F16(const Mesh& MESH, const Shader& SHADER, const Sedna::XinputManager* manager, unsigned controllerIndex)
+		:GameObject(MESH, SHADER, 1, new Texture("Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture("Assets/Textures/container2.png", TextureType::SpecularMap))
 	{
 		id = "F16";
-		controller = manager->getController(controllerIndex);
+		if (manager != nullptr)
+			controller = manager->getController(controllerIndex);
 	}
 	void F16::childUpdate(float dt)
 	{

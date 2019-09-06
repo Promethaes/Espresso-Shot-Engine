@@ -11,7 +11,13 @@
 #include "Espresso/Camera.h"
 #include "Espresso/ShaderProgram.h"
 #include "Espresso/XinputManager.h"
+#include "Espresso/Scene Manager.h"
+#include "Espresso/Test Scene.h"
 #include "f16.h"
+
+
+#define Scenes Espresso::Scene::scenes
+#define GameObjects Espresso::GameObject::gameObjects
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -24,7 +30,7 @@ float yaw = -90.0f;
 float pitch = 0.0f;
 bool firstMouse = true;
 
-Espresso::Camera defaultCamera;
+Espresso::Camera* defaultCamera = new Espresso::Camera();
 
 float dt = 0.0f;	// Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
@@ -61,14 +67,12 @@ int main() {
 
 	Sedna::XinputManager* manager = new Sedna::XinputManager();
 	Sedna::XinputController* controller = manager->getController(0);
-	Espresso::F16 f16(Espresso::Mesh("Assets/Mesh/missPiggy2.obj"), lightingShader,manager,0);
+	Espresso::F16 f16(Espresso::Mesh("Assets/Mesh/f16.obj"), lightingShader,manager,0);
 
-	glm::vec3 pointLightPositions[] = {
-	glm::vec3(0.7f,  0.2f,  2.0f),
-	glm::vec3(2.3f, -3.3f, -4.0f),
-	glm::vec3(-4.0f,  2.0f, -12.0f),
-	glm::vec3(0.0f,  0.0f, -3.0f)
-	};
+	
+	//run this scene
+	Espresso::TestScene* s = new Espresso::TestScene(true);
+	
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -81,49 +85,22 @@ int main() {
 		float currentFrame = glfwGetTime();
 		dt = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-		processInput(defaultCamera,dt,window);
-		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+		processInput(*defaultCamera,dt,window);
+		glClearColor(0.33f, 0.33f, 0.33f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 		manager->update();
 
-		for (auto x : Espresso::GameObject::gameObjects)
+		for (unsigned i = 0; i < Scenes.size(); i++) {
+			if (!Scenes[i]->isInit())
+				Scenes[i]->init();
+			else 
+				Scenes[i]->baseUpdate(dt, *defaultCamera);
+		}
+		for (auto x : GameObjects)
 			x->baseUpdate(dt);
 
-		lightingShader.loadViewMatrix(defaultCamera);
-		lightingShader.loadProjectionMatrix(800.0f * 2, 600.0f * 2);
-		lightingShader.setInt("material.diffuse", 0);
-		lightingShader.setInt("material.specular", 1);
-		lightingShader.setFloat("material.shininess", 32.0f);
-
-		// directional light
-		lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-		lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-		lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-		lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
-
-		for (unsigned i = 0; i < 4; i++) {
-
-			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].position", pointLightPositions[i]);
-			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].ambient", 0.05f, 0.05f, 0.05f);
-			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].diffuse", 0.8f, 0.8f, 0.8f);
-			lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].specular", 1.0f, 1.0f, 1.0f);
-			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].constant", 1.0f);
-			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].linear", 0.09);
-			lightingShader.setFloat("pointLights[" + std::to_string(i) + "].quadratic", 0.032);
-		}
-
-		glm::vec3 lightColor = glm::vec4(2.0f, 2.0f, 2.0f, 1);
-		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
-		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-
-		lightingShader.setVec3("light.ambient", ambientColor);
-		lightingShader.setVec3("light.diffuse", diffuseColor);
-		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-
-
-		lightingShader.setVec3("viewPos", defaultCamera.getPosition());
 
 
 
@@ -159,7 +136,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	defaultCamera.doMouseMovement(xoffset, yoffset);
+	defaultCamera->doMouseMovement(xoffset, yoffset);
 }
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 

@@ -1,16 +1,23 @@
 #pragma once
 #include <vector>
 namespace Espresso {
+	class Camera;
 	class Scene {
 	public:
-		Scene();
+		Scene(bool firstScene);
 
-		void baseUpdate(float dt);
-		virtual void init() = 0;
-		virtual void exit() = 0;
-		bool isActive = false;
+		void baseUpdate(float dt, Camera& defaultCamera);
+		virtual bool init() = 0;
+		virtual bool exit() = 0;
 		static std::vector<Scene*> scenes;
-	private:
-		virtual void childUpdate(float dt) = 0;
+
+		bool isActive() const { return active; }
+		bool isInit() const { return initialized; }
+		bool ShouldExit() const { return shouldExit; }
+	protected:
+		bool active = false;
+		bool initialized = false;
+		bool shouldExit = false;
+		virtual void childUpdate(float dt, Camera& defaultCamera) = 0;
 	};
 }
