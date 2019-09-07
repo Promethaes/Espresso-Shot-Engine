@@ -3,7 +3,8 @@
 #include "Espresso/Input.h"
 namespace Espresso {
 	F16::F16(const Mesh& MESH, const Shader& SHADER, const Sedna::XinputManager* manager, unsigned controllerIndex)
-		:GameObject(MESH, SHADER, 2, new Texture("Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture("Assets/Textures/container2.png", TextureType::SpecularMap))
+		:GameObject(SHADER, std::vector<Texture*>{new Texture("Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture("Assets/Textures/container2.png", TextureType::SpecularMap)},
+							std::vector<Mesh*>	 {new Mesh("Assets/Mesh/f16.obj")})
 	{
 		id = "F16";
 		if (manager != nullptr)
@@ -13,7 +14,7 @@ namespace Espresso {
 	{
 
 		if (isEvent(Events::W))
-			f16Pos += model[0] * 2.5f * dt;
+			f16Pos += meshs.back()->modelMatrix[0] * 2.5f * dt;
 		if (isEvent(Events::A)) {
 			f16RotationV -= glm::vec3(1, 0, 0);
 			f16Rotationfloat -= 0.005f;
@@ -52,8 +53,11 @@ namespace Espresso {
 				textures[i]->bind(1);
 		}
 
-		model = shader.loadModelMatrix(f16Pos, std::nullopt, f16RotationV, f16Rotationfloat);
-		mesh->draw();
+		for (auto x : meshs) {
+
+			x->modelMatrix = shader.loadModelMatrix(f16Pos, std::nullopt, f16RotationV, f16Rotationfloat);
+			x->draw();
+		}
 
 		for (unsigned i = 0; i < textures.size(); i++) {
 			if (textures[i]->type == TextureType::DiffuseMap)

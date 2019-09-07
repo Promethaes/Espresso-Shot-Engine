@@ -1,5 +1,8 @@
 #pragma once
 #include "IO.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 namespace Espresso {
 	class Mesh {
 	public:
@@ -17,6 +20,8 @@ namespace Espresso {
 
 		unsigned getFaces() const { return numFaces; }
 		unsigned getVerts() const { return numVerts; }
+
+		glm::mat4 modelMatrix = glm::mat4(1.0f);
 	private:
 		unsigned numFaces = 0;
 		unsigned numVerts = 0;

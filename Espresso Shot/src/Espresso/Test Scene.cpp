@@ -85,13 +85,14 @@ void Espresso::TestScene::childUpdate(float dt,Camera& defaultCamera)
 	};
 
 #if CUBETEST
+	rotate += dt;
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, cubes.back().getTexture().getTextureId());
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, specularMap.getTextureId());
 	for (unsigned int i = 0; i < cubes.size(); i++)
 	{
-		lightingShader.loadModelMatrix(true,false,false,glm::vec3(i*2 + 1,i*2 + 1,i*2 + 1));
+		lightingShader.loadModelMatrix(glm::vec3(i*2 + 1,i*2 + 1,i*2 + 1),std::nullopt, glm::vec3(i,i,i), rotate);
 		cubes.back().draw();
 	}
 	glActiveTexture(GL_TEXTURE0);
@@ -114,12 +115,12 @@ void Espresso::TestScene::childUpdate(float dt,Camera& defaultCamera)
 	for (unsigned i = 0; i < 4; i++) {
 
 		lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].position", pointLightPositions[i]);
-		lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].ambient", 0.05f, 0.05f, 0.05f);
-		lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].diffuse", 0.8f, 0.8f, 0.8f);
-		lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].specular", 1.0f, 1.0f, 1.0f);
-		lightingShader.setFloat("pointLights[" + std::to_string(i) + "].constant", 1.0f);
-		lightingShader.setFloat("pointLights[" + std::to_string(i) + "].linear", 0.09);
-		lightingShader.setFloat("pointLights[" + std::to_string(i) + "].quadratic", 0.032);
+		lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].ambient", 0.05f * 2, 0.05f * 2, 0.05f * 2);
+		lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].diffuse", 0.8f * 2, 0.8f * 2, 0.8f * 2);
+		lightingShader.setVec3 ("pointLights[" + std::to_string(i) + "].specular", 1.0f * 2, 1.0f * 2, 1.0f * 2);
+		lightingShader.setFloat("pointLights[" + std::to_string(i) + "].constant", 1.0f * 2);
+		lightingShader.setFloat("pointLights[" + std::to_string(i) + "].linear", 0.09 * 2);
+		lightingShader.setFloat("pointLights[" + std::to_string(i) + "].quadratic", 0.032 * 2);
 	}
 
 	glm::vec3 lightColor = glm::vec4(2.0f, 2.0f, 2.0f, 1);

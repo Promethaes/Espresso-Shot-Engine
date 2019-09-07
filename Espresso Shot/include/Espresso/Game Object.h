@@ -10,7 +10,7 @@
 namespace Espresso {
 	class GameObject {
 	public:
-		GameObject(const Mesh& MESH, const Shader& SHADER, unsigned numTextures, ...);
+		GameObject(const Shader& SHADER, const std::vector<Texture*>& textures, const std::vector<Mesh*>& meshs);
 
 		void baseUpdate(float dt);
 		void setShader(const Shader& SHADER) {
@@ -29,9 +29,8 @@ namespace Espresso {
 		bool loadedMesh = false;
 
 		std::vector<Texture*> textures;
-		Mesh* mesh = nullptr;
+		std::vector<Mesh*> meshs;
 		Shader shader;
-		glm::mat4 model = glm::mat4(1.0);
 	private:
 		virtual void childUpdate(float dt) = 0;
 

@@ -24,6 +24,7 @@ namespace Espresso {
 		Shader lightingShader{ "Assets/Shaders/lightingShader.vert", "Assets/Shaders/lightingShader.frag" };
 		F16 f16{ Mesh("Assets/Mesh/f16.obj"), lightingShader,nullptr,0 };
 #ifdef CUBETEST
+		float rotate = 0;
 		std::vector<Cube> cubes;
 		Texture specularMap;
 #endif
