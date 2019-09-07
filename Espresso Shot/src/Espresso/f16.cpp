@@ -1,10 +1,10 @@
-#include "f16.h"
+#include "Espresso/f16.h"
 #include "Espresso/Events.h"
 #include "Espresso/Input.h"
 namespace Espresso {
 	F16::F16(const Mesh& MESH, const Shader& SHADER, const Sedna::XinputManager* manager, unsigned controllerIndex)
-		:GameObject(SHADER, std::vector<Texture*>{new Texture("Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture("Assets/Textures/container2.png", TextureType::SpecularMap)},
-							std::vector<Mesh*>	 {new Mesh("Assets/Mesh/f16.obj")})
+		:GameObject(SHADER, std::vector<Texture*>{new Texture("../Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture("../Assets/Textures/container2.png", TextureType::SpecularMap)},
+							std::vector<Mesh*>	 {new Mesh("../Assets/Mesh/f16.obj")})
 	{
 		id = "F16";
 		if (manager != nullptr)

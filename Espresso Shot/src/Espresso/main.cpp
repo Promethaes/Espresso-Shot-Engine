@@ -13,12 +13,13 @@
 #include "Espresso/XinputManager.h"
 #include "Espresso/Scene Manager.h"
 #include "Espresso/Test Scene.h"
-#include "f16.h"
+#include "Espresso/f16.h"
 
 
 #define Scenes Espresso::Scene::scenes
 #define GameObjects Espresso::GameObject::gameObjects
-
+#define F16TEST true
+#define SCENETEST true
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 void processInput(Espresso::Camera& defaultCamera, float dt, GLFWwindow* window);
@@ -68,16 +69,19 @@ int main() {
 
 
 
-	Espresso::Shader lightingShader("Assets/Shaders/lightingShader.vert", "Assets/Shaders/lightingShader.frag");
+	Espresso::Shader lightingShader("../Assets/Shaders/lightingShader.vert", "../Assets/Shaders/lightingShader.frag");
 
 	Sedna::XinputManager* manager = new Sedna::XinputManager();
 	Sedna::XinputController* controller = manager->getController(0);
-	Espresso::F16 f16(Espresso::Mesh("Assets/Mesh/f16.obj"), lightingShader, manager, 0);
 
+#ifdef F16TEST
+	Espresso::F16 f16(Espresso::Mesh("../Assets/Mesh/f16.obj"), lightingShader, manager, 0);
+#endif
 
 	//run this scene
+#ifdef SCENETEST
 	Espresso::TestScene* s = new Espresso::TestScene(true);
-
+#endif
 
 
 	glEnable(GL_DEPTH_TEST);

@@ -6,27 +6,34 @@ workspace "Espresso Shot - Built"
    platforms {"x32","x64"}
    location "build/"
    language "C++"
+   cppdialect "C++17"
    files{"src/**.cpp","src/**.c","./include/Espresso/**.h"}
-   libdirs{"libs"}
    includedirs{"include/"}
 
-   filter "configurations:Debug"
-      targetdir ("build/Debug")
-      defines { "DEBUG" }
-      symbols "On"
-
-   filter "configurations:Release"
-      targetdir ("build/Release")
-      defines { "NDEBUG" }
-      optimize "On"
-
+local arch = " "
    filter { "platforms:x32" }
       system "Windows"
       architecture "x32"
+      defines {"Win32"}
+      arch = "x32"
 
    filter { "platforms:x64" }
       system "Windows"
       architecture "x64"
+      defines {"Win64"}
+      arch = "x64"
+
+   filter "configurations:Debug"
+      libdirs{"libs/" .. arch .. "/Debug"}
+      targetdir ("build/" .. arch .. "/Debug")
+      defines { "DEBUG" }
+      symbols "On"
+
+   filter "configurations:Release"
+      libdirs{"libs/".. arch .. "/Release"}
+      targetdir ("build/" .. arch .. "/Release")
+      defines { "NDEBUG" }
+      optimize "On"
 
 project "Espresso Shot - Built"
     defines{"PROJECT"}

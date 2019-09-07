@@ -4,8 +4,8 @@
 #include "Espresso/ShaderProgram.h"
 #include "Espresso/XinputManager.h"
 #include "Espresso/Scene Manager.h"
-#include "..//..//Cube.h"
-#include "..\..\f16.h"
+#include "Espresso/Cube.h"
+#include "Espresso/f16.h"
 
 #define CUBETEST false
 
@@ -21,8 +21,8 @@ namespace Espresso {
 		void childUpdate(float dt, Camera& defaultCamera) override;
 
 	private:
-		Shader lightingShader{ "Assets/Shaders/lightingShader.vert", "Assets/Shaders/lightingShader.frag" };
-		F16 f16{ Mesh("Assets/Mesh/f16.obj"), lightingShader,nullptr,0 };
+		Shader lightingShader{ "../Assets/Shaders/lightingShader.vert", "../Assets/Shaders/lightingShader.frag" };
+		F16 f16{ Mesh("../Assets/Mesh/f16.obj"), lightingShader,nullptr,0 };
 #ifdef CUBETEST
 		float rotate = 0;
 		std::vector<Cube> cubes;

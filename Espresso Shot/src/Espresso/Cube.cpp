@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "Espresso/Cube.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 namespace Espresso {
