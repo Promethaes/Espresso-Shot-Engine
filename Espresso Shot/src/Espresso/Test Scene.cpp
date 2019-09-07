@@ -83,7 +83,7 @@ void Espresso::TestScene::childUpdate(float dt,Camera& defaultCamera)
 	glm::vec3(-4.0f,  2.0f, -12.0f),
 	glm::vec3(0.0f,  0.0f, -3.0f)
 	};
-
+	//cubeeeee
 #if CUBETEST
 	rotate += dt;
 	glActiveTexture(GL_TEXTURE0);
