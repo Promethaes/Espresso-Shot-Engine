@@ -13,6 +13,7 @@ namespace Espresso {
 		glm::vec4 f16Pos = glm::vec4(0,0,0,1);
 		glm::vec3 f16RotationV = glm::vec3(1,1,1);
 		float f16Rotationfloat = 0.0f;
+		glm::mat4 f16ModelMat = glm::mat4(1.0f);
 
 	};
 }

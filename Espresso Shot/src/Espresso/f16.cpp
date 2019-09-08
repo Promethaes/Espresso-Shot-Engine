@@ -1,10 +1,12 @@
 #include "Espresso/f16.h"
 #include "Espresso/Events.h"
 #include "Espresso/Input.h"
+#define _CRT_SECURE_NO_WARNINGS
+
 namespace Espresso {
 	F16::F16(const Mesh& MESH, const Shader& SHADER, const Sedna::XinputManager* manager, unsigned controllerIndex)
-		:GameObject(SHADER, std::vector<Texture*>{new Texture("../Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture("../Assets/Textures/container2.png", TextureType::SpecularMap)},
-							std::vector<Mesh*>	 {new Mesh("../Assets/Mesh/f16.obj")})
+		:GameObject(SHADER,  std::vector<Texture*>{new Texture(std::string(std::getenv("EspressoShotPath")) + "Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture(std::string(std::getenv("EspressoShotPath")) + "Assets/Textures/container2.png", TextureType::SpecularMap)},
+							 std::vector<Mesh*>	 {new Mesh(std::string(std::getenv("EspressoShotPath")) + "Assets/Mesh/f16.obj")})
 	{
 		id = "F16";
 		if (manager != nullptr)
@@ -14,7 +16,7 @@ namespace Espresso {
 	{
 
 		if (isEvent(Events::W))
-			f16Pos += meshs.back()->modelMatrix[0] * 2.5f * dt;
+			f16Pos += f16ModelMat[0] * 2.5f * dt;
 		if (isEvent(Events::A)) {
 			f16RotationV -= glm::vec3(1, 0, 0);
 			f16Rotationfloat -= 0.005f;
@@ -54,7 +56,7 @@ namespace Espresso {
 		}
 
 		for (auto x : meshs) {
-
+			f16ModelMat = x->modelMatrix;
 			x->modelMatrix = shader.loadModelMatrix(f16Pos, std::nullopt, f16RotationV, f16Rotationfloat);
 			x->draw();
 		}

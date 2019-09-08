@@ -8,6 +8,7 @@
 #include "Espresso/f16.h"
 
 #define CUBETEST false
+#define _CRT_SECURE_NO_WARNINGS
 
 namespace Espresso {
 
@@ -21,8 +22,8 @@ namespace Espresso {
 		void childUpdate(float dt, Camera& defaultCamera) override;
 
 	private:
-		Shader lightingShader{ "../Assets/Shaders/lightingShader.vert", "../Assets/Shaders/lightingShader.frag" };
-		F16 f16{ Mesh("../Assets/Mesh/f16.obj"), lightingShader,nullptr,0 };
+		Shader lightingShader{ std::string(std::getenv("EspressoShotPath")) + "Assets/Shaders/lightingShader.vert", std::string(std::getenv("EspressoShotPath")) + "Assets/Shaders/lightingShader.frag" };
+		F16 f16{ Mesh(std::string(std::getenv("EspressoShotPath")) + "Assets/Mesh/f16.obj"), lightingShader,nullptr,0 };
 #ifdef CUBETEST
 		float rotate = 0;
 		std::vector<Cube> cubes;

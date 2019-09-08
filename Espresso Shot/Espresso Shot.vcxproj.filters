@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
     <ClCompile Include="src\Espresso\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="f16.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Espresso\Scene Manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,7 +48,13 @@
     <ClCompile Include="src\Espresso\Test Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Cube.cpp">
+    <ClCompile Include="src\Espresso\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Espresso\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Espresso\f16.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,9 +77,6 @@
     <ClInclude Include="include\Espresso\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="f16.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Espresso\Scene Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -98,7 +95,10 @@
     <ClInclude Include="include\Espresso\Test Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.h">
+    <ClInclude Include="include\Espresso\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Espresso\f16.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

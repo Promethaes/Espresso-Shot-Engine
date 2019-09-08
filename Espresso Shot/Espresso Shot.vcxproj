@@ -76,7 +76,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>./include;$(IncludePath)</IncludePath>
-    <LibraryPath>./libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>./libs/x64/Release;$(LibraryPath)</LibraryPath>
     <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -98,6 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,12 +136,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="f16.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Espresso\Camera.cpp" />
+    <ClCompile Include="src\Espresso\Cube.cpp" />
+    <ClCompile Include="src\Espresso\f16.cpp" />
     <ClCompile Include="src\Espresso\Game Object.cpp" />
     <ClCompile Include="src\Espresso\Input.cpp" />
+    <ClCompile Include="src\Espresso\main.cpp" />
     <ClCompile Include="src\Espresso\Mesh.cpp" />
     <ClCompile Include="src\Espresso\Scene Manager.cpp" />
     <ClCompile Include="src\Espresso\ShaderProgram.cpp" />
@@ -151,10 +152,10 @@
     <ClCompile Include="src\stb_image_implimentation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cube.h" />
-    <ClInclude Include="f16.h" />
     <ClInclude Include="include\Espresso\Camera.h" />
+    <ClInclude Include="include\Espresso\Cube.h" />
     <ClInclude Include="include\Espresso\Events.h" />
+    <ClInclude Include="include\Espresso\f16.h" />
     <ClInclude Include="include\Espresso\Game Object.h" />
     <ClInclude Include="include\Espresso\Input.h" />
     <ClInclude Include="include\Espresso\IO.h" />
