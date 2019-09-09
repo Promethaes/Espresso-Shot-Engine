@@ -328,3 +328,5 @@ ASALocalRun/
 .mfractor/
 
 Espresso Shot/build/
+!Espresso Shot/libs/**.lib
+!Espresso Shot/libs/**.dll
