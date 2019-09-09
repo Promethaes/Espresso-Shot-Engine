@@ -13,6 +13,8 @@ workspace "Espresso Shot - Built"
       os.getenv("EspressoShotPath").."src/**.cpp",
       os.getenv("EspressoShotPath").."src/**.c",
       os.getenv("EspressoShotPath").."include/Espresso/**.h",
+      os.getenv("EspressoShotPath").."include/Espresso/**.hpp",
+      os.getenv("EspressoShotPath").."include/Espresso/**.cs",
       os.getenv("EspressoShotPath").."Assets/Mesh/**.obj",
       os.getenv("EspressoShotPath").."Assets/Textures/**.png",
       os.getenv("EspressoShotPath").."Assets/Shaders/**.vert",
@@ -21,6 +23,7 @@ workspace "Espresso Shot - Built"
    includedirs{os.getenv("EspressoShotPath").."include/"}
 
 local arch = " "
+local config = " "
    filter { "platforms:x32" }
       system "Windows"
       architecture "x32"
@@ -38,19 +41,28 @@ local arch = " "
       arch = "x64"
 
    filter "configurations:Debug"
-      libdirs{os.getenv("EspressoShotPath").."libs/" .. arch .. "/Debug"}
-      targetdir (solutionDir .. "/build/" .. arch .. "/Debug")
       defines { "DEBUG" }
       symbols "On"
+      targetdir (solutionDir .. "/build/" .. arch .. "/Debug")
+      config = "/Debug"
 
    filter "configurations:Release"
-      libdirs{os.getenv("EspressoShotPath").."libs/".. arch .. "/Release"}
-      targetdir (solutionDir .. "/build/" .. arch .. "/Release")
       defines { "NDEBUG" }
       optimize "On"
+      targetdir (solutionDir .. "/build/" .. arch .. "/Release")
+      config = "/Release"
+
+   filter {}
+      libdirs{os.getenv("EspressoShotPath").."libs/" .. arch .. config,os.getenv("EspressoShotPath").."libs/" .. arch .. config.."/Fmod"}
+      config = "\\Release\\"
+      os.execute("mkdir " .. "build\\build\\"..arch..config)
+      os.execute("XCOPY " .. "libs\\x64\\Debug\\Fmod\\fmod.dll " .."build\\build\\"..arch..config)
+      config = "\\Debug\\"
+      os.execute("mkdir " .. "build\\build\\"..arch..config)
+      os.execute("XCOPY " .. "libs\\x64\\Debug\\Fmod\\fmod.dll " .."build\\build\\"..arch..config)
 
 project "Espresso Shot - Built"
     defines{"PROJECT"}
     kind "ConsoleApp"
     configuration "windows"
-        links { "opengl32", "glfw3.lib"}
+        links { "opengl32", "glfw3.lib","fmod_vc.lib","fmodL_vc.lib"}

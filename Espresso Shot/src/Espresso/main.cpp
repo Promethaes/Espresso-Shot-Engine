@@ -3,6 +3,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <Fmod/fmod.h>
+#include <Fmod/fmod_common.h>
+#include <Fmod/fmod.hpp>
+#include <Fmod/fmod_errors.h>
 
 #include <iostream>
 #include <vector>
@@ -14,9 +18,11 @@
 #include "Espresso/Test Scene.h"
 #include "Espresso/f16.h"
 
+
 #define _CRT_SECURE_NO_WARNINGS
 #define Scenes Espresso::Scene::scenes
 #define GameObjects Espresso::GameObject::gameObjects
+#define ESPRESSOSHOTPATH std::string(std::getenv("EspressoShotPath"))
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -64,10 +70,41 @@ int main() {
 	}
 	//end initialization
 #pragma endregion
+	
 
 
 
-	Espresso::Shader lightingShader(std::string(std::getenv("EspressoShotPath")) + "Assets/Shaders/lightingShader.vert", std::string(std::getenv("EspressoShotPath")) + "Assets/Shaders/lightingShader.frag");
+#pragma region InitializeFmod
+	///This code is NOT mine, it is from <https://www.fmod.com/resources/documentation-api?version=2.0&page=white-papers-getting-started.html>
+	FMOD_RESULT result;
+	FMOD::System* system = NULL;
+
+	result = FMOD::System_Create(&system);      // Create the main system object.
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+	result = system->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+#pragma endregion
+
+	
+	///FMOD::Sound** sound = nullptr;
+	///FMOD::ChannelGroup** group1;
+	///std::string soundPath = ESPRESSOSHOTPATH + "Assets/Sound/testSound.mp3";
+	///auto soundHandle = system->createSound(soundPath.c_str(),FMOD_2D ,new FMOD_CREATESOUNDEXINFO(),sound);
+	///auto channelGHandle = system->createChannelGroup("group1", group1);
+	///FMOD::Channel** channel = nullptr;
+	///
+	///system->playSound(*sound, *group1, false, channel);
+
+	Espresso::Shader lightingShader(ESPRESSOSHOTPATH + "Assets/Shaders/lightingShader.vert", ESPRESSOSHOTPATH + "Assets/Shaders/lightingShader.frag");
 
 	Sedna::XinputManager* manager = new Sedna::XinputManager();
 	Sedna::XinputController* controller = manager->getController(0);
@@ -79,7 +116,7 @@ int main() {
 		sceneTest = true;
 
 	if (f16Test)
-		Espresso::F16 f16(Espresso::Mesh(std::string(std::getenv("EspressoShotPath")) + "Assets/Mesh/f16.obj"), lightingShader, manager, 0);
+		Espresso::F16 f16(Espresso::Mesh(ESPRESSOSHOTPATH + "Assets/Mesh/f16.obj"), lightingShader, manager, 0);
 
 	//run this scene
 	if (sceneTest)
