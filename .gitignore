@@ -328,4 +328,4 @@ ASALocalRun/
 .mfractor/
 
 Espresso Shot/build/
-!*[Ll]ibs/*
+!*/[Ll]ibs/**/*
