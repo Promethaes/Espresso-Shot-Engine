@@ -6,7 +6,7 @@
 namespace Espresso {
 	F16::F16(const Mesh& MESH, const Shader& SHADER, const Sedna::XinputManager* manager, unsigned controllerIndex)
 		:GameObject(SHADER,  std::vector<Texture*>{new Texture(std::string(std::getenv("EspressoShotPath")) + "Assets/Textures/Metal_specmap.png", TextureType::SpecularMap), new Texture(std::string(std::getenv("EspressoShotPath")) + "Assets/Textures/container2.png", TextureType::SpecularMap)},
-							 std::vector<Mesh*>	 {new Mesh(std::string(std::getenv("EspressoShotPath")) + "Assets/Mesh/f16.obj")})
+							 std::vector<Mesh*>	 {new Mesh(MESH)})
 	{
 		id = "F16";
 		if (manager != nullptr)

@@ -109,14 +109,14 @@ int main() {
 	Sedna::XinputManager* manager = new Sedna::XinputManager();
 	Sedna::XinputController* controller = manager->getController(0);
 
-	bool f16Test = true;
+	bool f16Test = false;
 	bool sceneTest = true;
 
 	if (f16Test == true)
 		sceneTest = true;
 
-	if (f16Test)
-		Espresso::F16 f16(Espresso::Mesh(ESPRESSOSHOTPATH + "Assets/Mesh/f16.obj"), lightingShader, manager, 0);
+	//if (f16Test)
+	//	Espresso::F16 f16(Espresso::Mesh(ESPRESSOSHOTPATH + "Assets/Mesh/f16.obj"), lightingShader, manager, 0);
 
 	//run this scene
 	if (sceneTest)
